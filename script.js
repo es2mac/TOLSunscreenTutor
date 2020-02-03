@@ -2,6 +2,11 @@
 const TICK_INTERVAL = 500;
 const VIDEO_ID = "1rth2rF5v-s";
 
+// Global variables
+var player;
+var pauseTime = 4000;
+var pausePlayTimer;
+
 // Load IFrame Player API code asynchronously
 var tag = document.createElement("script");
 
@@ -10,7 +15,6 @@ var firstScriptTag = document.getElementsByTagName("script")[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 // Create an <iframe> (and YouTube player) after the API code downloads
-var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("ytplayer", {
     height: "405",
@@ -25,33 +29,38 @@ function onYouTubeIframeAPIReady() {
 
 // Called when the video player is ready
 function onPlayerReady(event) {
+  // let player = event.target;
   // console.log(event.target);
   // event.target.mute();
   // event.target.playVideo();
   // event.target.unMute();
-  setInterval(timerCallback, TICK_INTERVAL);
 }
 
 // Called when the player's state changes
 // YT.PlayerState.PLAYING = 1
-var done = false;
 function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.PLAYING && !done) {
-    setTimeout(stopVideo, 6000);
-    done = true;
+  if (event.data == YT.PlayerState.PLAYING) {
+    scheduleNextPause();
   }
 }
 
-function stopVideo() {
-  player.stopVideo();
+// Set timer to pause palyer at pauseTime
+function scheduleNextPause() {
+  clearTimeout(pausePlayTimer);
+  if (!pauseTime) {
+    return;
+  }
+  let currentTime = player.getCurrentTime() * 1000;
+  let playbackRate = player.getPlaybackRate();
+  let remainingTime = (pauseTime - currentTime) / playbackRate;
+
+  pausePlayTimer = setTimeout(pauseVideo, remainingTime);
+}
+
+function pauseVideo() {
+  player.pauseVideo();
 }
 
 function seekTo(time) {
   player.seekTo(time);
-}
-
-function timerCallback() {
-  time = player.getCurrentTime();
-  rate = player.getPlaybackRate();
-  console.log(time, rate);
 }

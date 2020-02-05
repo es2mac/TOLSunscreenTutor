@@ -1,10 +1,16 @@
 // Constants
-const TICK_INTERVAL = 500;
 const VIDEO_ID = "1rth2rF5v-s";
+const TIMESTAMPS = {
+  q1: 31.7,
+  q1_correct: 32.5,
+  q1_incorrect: 42.3,
+  q2: 70
+};
 
 // Global variables
 var player;
-var pauseTime = 4000;
+var nextPauseTime;
+var nextSceneID;
 var pausePlayTimer;
 
 // Load IFrame Player API code asynchronously
@@ -29,6 +35,8 @@ function onYouTubeIframeAPIReady() {
 
 // Called when the video player is ready
 function onPlayerReady(event) {
+  // player.seekTo(28);
+  // player.pauseVideo();
   // let player = event.target;
   // console.log(event.target);
   // event.target.mute();
@@ -39,28 +47,79 @@ function onPlayerReady(event) {
 // Called when the player's state changes
 // YT.PlayerState.PLAYING = 1
 function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.PLAYING) {
-    scheduleNextPause();
+  switch (event.data) {
+    case YT.PlayerState.PLAYING:
+      scheduleNextScene();
+      break;
+    case YT.PlayerState.PAUSED:
+      // showNextScene();
+      break;
+    default:
+      break;
   }
 }
 
-// Set timer to pause palyer at pauseTime
-function scheduleNextPause() {
+// Set timer to pause palyer at nextPauseTime
+function scheduleNextScene() {
   clearTimeout(pausePlayTimer);
-  if (!pauseTime) {
+  if (!nextPauseTime) {
     return;
   }
-  let currentTime = player.getCurrentTime() * 1000;
+  let currentTime = player.getCurrentTime();
   let playbackRate = player.getPlaybackRate();
-  let remainingTime = (pauseTime - currentTime) / playbackRate;
+  let remainingTime = ((nextPauseTime - currentTime) * 1000) / playbackRate;
 
-  pausePlayTimer = setTimeout(pauseVideo, remainingTime);
+  pausePlayTimer = setTimeout(function() {
+    pauseVideo();
+    showNextScene();
+    nextPauseTime = null;
+    nextSceneID = null;
+  }, remainingTime);
+}
+
+function showNextScene() {
+  if (!nextSceneID) {
+    return;
+  }
+  $(nextSceneID).fadeIn();
 }
 
 function pauseVideo() {
   player.pauseVideo();
 }
 
-function seekTo(time) {
-  player.seekTo(time);
-}
+$(function() {
+  $("#welcome-scene button").click(function() {
+    $(this)
+      .parent()
+      .fadeOut(function() {
+        nextPauseTime = TIMESTAMPS.q1;
+        nextSceneID = "#interactive-section";
+        player.playVideo();
+      });
+  });
+
+  $("#q1-uva").click(function() {
+    $(this)
+      .parent()
+      .fadeOut(function() {
+        player.seekTo(TIMESTAMPS.q1_correct);
+        player.playVideo();
+        nextPauseTime = TIMESTAMPS.q1_incorrect;
+        // nextSceneID = "#interactive-section";
+      });
+  });
+
+  $("#q1-uvb").click(function() {
+    $(this)
+      .parent()
+      .fadeOut(function() {
+        player.seekTo(TIMESTAMPS.q1_incorrect);
+        player.playVideo();
+        nextPauseTime = TIMESTAMPS.q2;
+        // nextSceneID = "#interactive-section";
+      });
+  });
+
+  $("#interactive-section").hide();
+});

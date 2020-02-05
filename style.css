@@ -1,3 +1,7 @@
+h1 {
+  text-align: center;
+}
+
 main {
   display: grid;
   grid-template: 1fr / 1fr;
@@ -7,13 +11,25 @@ main {
 main section {
   grid-column: 1 / 1;
   grid-row: 1 / 1;
+  width: 80%;
+  min-width: 720px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aquamarine;
+  z-index: 1;
 }
 
-#main_video {
+#welcome-scene {
+  flex-direction: column;
+  /* zind */
+}
+
+#main-video {
   z-index: 0;
 }
 
-#interactive_section {
-  z-index: 1;
-  display: none;
+#interactive-section button {
+  margin: 8px;
 }

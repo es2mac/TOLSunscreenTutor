@@ -1,6 +1,6 @@
 // Constants
 const VIDEO_ID = "1rth2rF5v-s";
-const TIMESTAMPS = {
+const TIMESTAMP = {
   q1: 31.7,
   q1_correct: 32.5,
   q1_incorrect: 42.3,
@@ -88,38 +88,42 @@ function pauseVideo() {
   player.pauseVideo();
 }
 
+// On document ready
 $(function() {
+  $("#q1-section").hide();
+
+  // Welcome screen start
   $("#welcome-scene button").click(function() {
     $(this)
       .parent()
       .fadeOut(function() {
-        nextPauseTime = TIMESTAMPS.q1;
-        nextSceneID = "#interactive-section";
+        nextPauseTime = TIMESTAMP.q1;
+        nextSceneID = "#q1-section";
         player.playVideo();
       });
   });
 
+  // Question 1: Learner selected UVA
   $("#q1-uva").click(function() {
     $(this)
       .parent()
       .fadeOut(function() {
-        player.seekTo(TIMESTAMPS.q1_correct);
+        player.seekTo(TIMESTAMP.q1_correct);
         player.playVideo();
-        nextPauseTime = TIMESTAMPS.q1_incorrect;
-        // nextSceneID = "#interactive-section";
+        nextPauseTime = TIMESTAMP.q1_incorrect;
+        // nextSceneID = "#q1-section";
       });
   });
 
+  // Question 2: Learner selected UVB
   $("#q1-uvb").click(function() {
     $(this)
       .parent()
       .fadeOut(function() {
-        player.seekTo(TIMESTAMPS.q1_incorrect);
+        player.seekTo(TIMESTAMP.q1_incorrect);
         player.playVideo();
-        nextPauseTime = TIMESTAMPS.q2;
-        // nextSceneID = "#interactive-section";
+        nextPauseTime = TIMESTAMP.q2;
+        // nextSceneID = "#q1-section";
       });
   });
-
-  $("#interactive-section").hide();
 });

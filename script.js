@@ -9,9 +9,9 @@ const TIMESTAMP = {
 
 // Global variables
 var player;
-var nextPauseTime;
-var nextSceneID;
-var pausePlayTimer;
+var nextActionTime;
+var nextAction;
+var actionTimer;
 
 // Load IFrame Player API code asynchronously
 var tag = document.createElement("script");
@@ -49,43 +49,32 @@ function onPlayerReady(event) {
 function onPlayerStateChange(event) {
   switch (event.data) {
     case YT.PlayerState.PLAYING:
-      scheduleNextScene();
+      scheduleNextAction();
       break;
     case YT.PlayerState.PAUSED:
-      // showNextScene();
       break;
     default:
       break;
   }
 }
 
-// Set timer to pause palyer at nextPauseTime
-function scheduleNextScene() {
-  clearTimeout(pausePlayTimer);
-  if (!nextPauseTime) {
+// Set timer to perform action at nextActionTime
+function scheduleNextAction() {
+  clearTimeout(actionTimer);
+  if (!nextActionTime) {
     return;
   }
   let currentTime = player.getCurrentTime();
   let playbackRate = player.getPlaybackRate();
-  let remainingTime = ((nextPauseTime - currentTime) * 1000) / playbackRate;
+  let remainingTime = ((nextActionTime - currentTime) * 1000) / playbackRate;
 
-  pausePlayTimer = setTimeout(function() {
-    pauseVideo();
-    showNextScene();
-    nextPauseTime = null;
-    nextSceneID = null;
+  actionTimer = setTimeout(function() {
+    let action = nextAction;
+    nextActionTime = null;
+    nextAction = null;
+    actionTimer = null;
+    action();
   }, remainingTime);
-}
-
-function showNextScene() {
-  if (!nextSceneID) {
-    return;
-  }
-  $(nextSceneID).fadeIn();
-}
-
-function pauseVideo() {
-  player.pauseVideo();
 }
 
 // On document ready
@@ -97,8 +86,12 @@ $(function() {
     $(this)
       .parent()
       .fadeOut(function() {
-        nextPauseTime = TIMESTAMP.q1;
-        nextSceneID = "#q1-section";
+        nextActionTime = TIMESTAMP.q1;
+        nextAction = function() {
+          player.pauseVideo();
+          $("#q1-section").fadeIn();
+        };
+        // Start playing
         player.playVideo();
       });
   });
@@ -110,8 +103,10 @@ $(function() {
       .fadeOut(function() {
         player.seekTo(TIMESTAMP.q1_correct);
         player.playVideo();
-        nextPauseTime = TIMESTAMP.q1_incorrect;
-        // nextSceneID = "#q1-section";
+        nextActionTime = TIMESTAMP.q1_incorrect;
+        nextAction = function() {
+          player.seekTo(TIMESTAMP.q2);
+        };
       });
   });
 
@@ -122,8 +117,10 @@ $(function() {
       .fadeOut(function() {
         player.seekTo(TIMESTAMP.q1_incorrect);
         player.playVideo();
-        nextPauseTime = TIMESTAMP.q2;
-        // nextSceneID = "#q1-section";
+        nextActionTime = TIMESTAMP.q2;
+        nextAction = function() {
+          player.seekTo(TIMESTAMP.q2);
+        };
       });
   });
 });

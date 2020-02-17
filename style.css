@@ -18,8 +18,8 @@ main section {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: aquamarine;
-  /* background-color: white; */
+  /* background-color: aquamarine; */
+  background-color: white;
   z-index: 1;
 }
 
@@ -31,12 +31,37 @@ main section {
   z-index: 0;
 }
 
-#q2-section div {
+.section-container {
   position: relative;
 }
 
-#q2-section img {
+.section-container img {
   width: 720px;
+}
+
+#q1-section button {
+  position: absolute;
+  border: 0;
+  border: 2px solid rgba(238, 130, 238, 0.514);
+  background-color: transparent;
+}
+
+#q1-section button:hover {
+  background-color: rgba(238, 130, 238, 0.214);
+}
+
+#q1-uva {
+  top: 120px;
+  left: 530px;
+  width: 140px;
+  height: 140px;
+}
+
+#q1-uvb {
+  top: 100px;
+  left: 220px;
+  width: 180px;
+  height: 120px;
 }
 
 #q2-section button {

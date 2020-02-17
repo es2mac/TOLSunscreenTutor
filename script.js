@@ -94,7 +94,7 @@ $(function() {
     player.seekTo(TIMESTAMP.q1_correct);
     player.playVideo();
     $(this)
-      .parent()
+      .parents("section")
       .fadeOut(function() {
         nextActionTime = TIMESTAMP.q1_correct_choice;
         nextAction = function() {
@@ -106,7 +106,7 @@ $(function() {
 
   // Question 1: Learner selected UVB (incorrect answer)
   $("#q1-uvb").click(function() {
-    let thisScene = $(this).parent();
+    let thisScene = $(this).parents("section");
     $("#q1-incorrect-feedback-section").fadeIn(function() {
       thisScene.hide();
     });

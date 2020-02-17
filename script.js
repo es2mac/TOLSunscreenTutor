@@ -147,17 +147,35 @@ $(function() {
       .fadeOut(setShowQ2Action);
   });
 
-  /*
-          <button id="q2-smooth" class="btn btn-primary" type="submit">
-          Smooth
-        </button>
-        <button id="q2-reflection" class="btn btn-primary" type="submit">
-          Reflection
-        </button>
-        <button id="q2-absorb" class="btn btn-primary" type="submit">
-          Absorb
-        </button>
-        <button id="q2-hydrating" class="btn btn-primary" type="submit">
-          Hydrating
-  */
+  // Question 2 choose "Smooth"
+  $("#q2-smooth").click(function() {
+    let thisScene = $(this).parent();
+    $("#q2-smooth-section").fadeIn(function() {
+      thisScene.hide();
+    });
+  });
+
+  // Question 2 choose "Reflection"
+  $("#q2-reflection").click(function() {
+    let thisScene = $(this).parent();
+    $("#q2-reflection-section").fadeIn(function() {
+      thisScene.hide();
+    });
+  });
+
+  // Question 2 choose "Absorb"
+  $("#q2-absorb").click(function() {
+    let thisScene = $(this).parent();
+    $("#q2-absorb-section").fadeIn(function() {
+      thisScene.hide();
+    });
+  });
+
+  // Question 2 choose "Hydrating"
+  $("#q2-hydrating").click(function() {
+    let thisScene = $(this).parent();
+    $("#q2-hydrating-section").fadeIn(function() {
+      thisScene.hide();
+    });
+  });
 });

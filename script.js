@@ -1,10 +1,10 @@
 // Constants
 const VIDEO_ID = "LlHyP-mKyrg";
 const TIMESTAMP = {
-  q1: 31.7,
-  q1_correct: 32.5,
-  q1_incorrect: 42.3,
-  q2: 70
+  q1: 59.0,
+  q1_correct: 61.0,
+  q1_incorrect: 66.0,
+  q2: 170
 };
 
 // Global variables
@@ -79,8 +79,6 @@ function scheduleNextAction() {
 
 // On document ready
 $(function() {
-  $("#q1-section").hide();
-
   // Welcome screen start
   $("#welcome-scene button").click(function() {
     $(this)
@@ -118,6 +116,20 @@ $(function() {
         player.seekTo(TIMESTAMP.q1_incorrect);
         player.playVideo();
         nextActionTime = TIMESTAMP.q2;
+        nextAction = function() {
+          player.seekTo(TIMESTAMP.q2);
+        };
+      });
+  });
+
+  // Question 1 after correct choice: choose to watch
+  $("#q1-correct-watch").click(function() {
+    $(this)
+      .parent()
+      .fadeOut(function() {
+        player.seekTo(TIMESTAMP.q1_incorrect);
+        player.playVideo();
+        // nextActionTime = TIMESTAMP.q1_incorrect;
         nextAction = function() {
           player.seekTo(TIMESTAMP.q2);
         };

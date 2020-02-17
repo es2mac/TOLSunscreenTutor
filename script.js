@@ -6,7 +6,8 @@ const TIMESTAMP = {
   q1_correct_choice: 66.0,
   q1_incorrect: 68.5,
   part1_conclusion: 126.5,
-  q2: 150.0
+  q2: 150.0,
+  q2_feedback: 153.0
 };
 
 // Global variables
@@ -169,5 +170,14 @@ $(function() {
     $("#q2-hydrating-section").fadeIn(function() {
       thisScene.hide();
     });
+  });
+
+  // Question 2 continue after feedback (all 4 buttons)
+  $(".q2-continue-button").click(function() {
+    player.seekTo(TIMESTAMP.q2_feedback);
+    player.playVideo();
+    $(this)
+      .parent()
+      .fadeOut();
   });
 });

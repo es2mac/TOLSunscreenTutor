@@ -3,7 +3,8 @@ const VIDEO_ID = "LlHyP-mKyrg";
 const TIMESTAMP = {
   q1: 59.0,
   q1_correct: 61.0,
-  q1_incorrect: 66.0,
+  q1_correct_choice: 66.0,
+  q1_incorrect: 68.5,
   q2: 170
 };
 
@@ -81,6 +82,8 @@ function scheduleNextAction() {
 $(function() {
   // Welcome screen start
   $("#welcome-scene button").click(function() {
+    // Start playing
+    player.playVideo();
     $(this)
       .parent()
       .fadeOut(function() {
@@ -89,50 +92,62 @@ $(function() {
           player.pauseVideo();
           $("#q1-section").fadeIn();
         };
-        // Start playing
-        player.playVideo();
       });
   });
 
-  // Question 1: Learner selected UVA
+  // Question 1: Learner selected UVA (correct answer)
   $("#q1-uva").click(function() {
+    player.seekTo(TIMESTAMP.q1_correct);
+    player.playVideo();
     $(this)
       .parent()
       .fadeOut(function() {
-        player.seekTo(TIMESTAMP.q1_correct);
-        player.playVideo();
-        nextActionTime = TIMESTAMP.q1_incorrect;
+        nextActionTime = TIMESTAMP.q1_correct_choice;
         nextAction = function() {
-          player.seekTo(TIMESTAMP.q2);
+          player.pauseVideo();
+          $("#q1-correct-feedback-section").fadeIn();
         };
       });
   });
 
-  // Question 1: Learner selected UVB
+  // Question 1: Learner selected UVB (incorrect answer)
   $("#q1-uvb").click(function() {
-    $(this)
-      .parent()
-      .fadeOut(function() {
-        player.seekTo(TIMESTAMP.q1_incorrect);
-        player.playVideo();
-        nextActionTime = TIMESTAMP.q2;
-        nextAction = function() {
-          player.seekTo(TIMESTAMP.q2);
-        };
-      });
+    let thisScene = $(this).parent();
+    $("#q1-incorrect-feedback-section").fadeIn(function() {
+      thisScene.hide();
+    });
   });
 
   // Question 1 after correct choice: choose to watch
   $("#q1-correct-watch").click(function() {
+    player.seekTo(TIMESTAMP.q1_incorrect);
+    player.playVideo();
     $(this)
       .parent()
       .fadeOut(function() {
-        player.seekTo(TIMESTAMP.q1_incorrect);
-        player.playVideo();
+        // TODO
         // nextActionTime = TIMESTAMP.q1_incorrect;
         nextAction = function() {
-          player.seekTo(TIMESTAMP.q2);
+          player.pauseVideo();
         };
       });
   });
+
+  // Question 1 after incorrect choice, same as Q1 correct choose to watch
+  $("#q1-incorrect-continue").click(function() {
+    player.seekTo(TIMESTAMP.q1_incorrect);
+    player.playVideo();
+    $(this)
+      .parent()
+      .fadeOut(function() {
+        // TODO
+        // nextActionTime = TIMESTAMP.q1_incorrect;
+        nextAction = function() {
+          player.pauseVideo();
+        };
+      });
+  });
+
+  // Question 1 after correct choice: choose to skip
+  // TODO: choose to skip
 });

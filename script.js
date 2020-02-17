@@ -1,5 +1,5 @@
 // Constants
-const VIDEO_ID = "1rth2rF5v-s";
+const VIDEO_ID = "LlHyP-mKyrg";
 const TIMESTAMP = {
   q1: 31.7,
   q1_correct: 32.5,
@@ -110,7 +110,7 @@ $(function() {
       });
   });
 
-  // Question 2: Learner selected UVB
+  // Question 1: Learner selected UVB
   $("#q1-uvb").click(function() {
     $(this)
       .parent()

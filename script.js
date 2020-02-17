@@ -5,7 +5,8 @@ const TIMESTAMP = {
   q1_correct: 61.0,
   q1_correct_choice: 66.0,
   q1_incorrect: 68.5,
-  q2: 170
+  part1_conclusion: 126.5,
+  q2: 150.0
 };
 
 // Global variables
@@ -35,15 +36,7 @@ function onYouTubeIframeAPIReady() {
 }
 
 // Called when the video player is ready
-function onPlayerReady(event) {
-  // player.seekTo(28);
-  // player.pauseVideo();
-  // let player = event.target;
-  // console.log(event.target);
-  // event.target.mute();
-  // event.target.playVideo();
-  // event.target.unMute();
-}
+function onPlayerReady(event) {}
 
 // Called when the player's state changes
 // YT.PlayerState.PLAYING = 1
@@ -118,36 +111,53 @@ $(function() {
     });
   });
 
+  // A couple buttons will set the next action to showing Q2, so use this
+  function setShowQ2Action() {
+    nextActionTime = TIMESTAMP.q2;
+    nextAction = function() {
+      player.pauseVideo();
+      $("#q2-section").fadeIn();
+    };
+  }
+
   // Question 1 after correct choice: choose to watch
   $("#q1-correct-watch").click(function() {
     player.seekTo(TIMESTAMP.q1_incorrect);
     player.playVideo();
     $(this)
       .parent()
-      .fadeOut(function() {
-        // TODO
-        // nextActionTime = TIMESTAMP.q1_incorrect;
-        nextAction = function() {
-          player.pauseVideo();
-        };
-      });
+      .fadeOut(setShowQ2Action);
   });
 
-  // Question 1 after incorrect choice, same as Q1 correct choose to watch
+  // Question 1 after incorrect choice, exactly the same as Q1 correct choose to watch
   $("#q1-incorrect-continue").click(function() {
     player.seekTo(TIMESTAMP.q1_incorrect);
     player.playVideo();
     $(this)
       .parent()
-      .fadeOut(function() {
-        // TODO
-        // nextActionTime = TIMESTAMP.q1_incorrect;
-        nextAction = function() {
-          player.pauseVideo();
-        };
-      });
+      .fadeOut(setShowQ2Action);
   });
 
   // Question 1 after correct choice: choose to skip
-  // TODO: choose to skip
+  $("#q1-correct-skip").click(function() {
+    player.seekTo(TIMESTAMP.part1_conclusion);
+    player.playVideo();
+    $(this)
+      .parent()
+      .fadeOut(setShowQ2Action);
+  });
+
+  /*
+          <button id="q2-smooth" class="btn btn-primary" type="submit">
+          Smooth
+        </button>
+        <button id="q2-reflection" class="btn btn-primary" type="submit">
+          Reflection
+        </button>
+        <button id="q2-absorb" class="btn btn-primary" type="submit">
+          Absorb
+        </button>
+        <button id="q2-hydrating" class="btn btn-primary" type="submit">
+          Hydrating
+  */
 });

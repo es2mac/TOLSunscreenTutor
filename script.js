@@ -79,7 +79,7 @@ $(function() {
     // Start playing
     player.playVideo();
     $(this)
-      .parent()
+      .parents("section")
       .fadeOut(function() {
         nextActionTime = TIMESTAMP.q1;
         nextAction = function() {
@@ -127,7 +127,7 @@ $(function() {
     player.seekTo(TIMESTAMP.q1_incorrect);
     player.playVideo();
     $(this)
-      .parent()
+      .parents("section")
       .fadeOut(setShowQ2Action);
   });
 
@@ -136,7 +136,7 @@ $(function() {
     player.seekTo(TIMESTAMP.part1_conclusion);
     player.playVideo();
     $(this)
-      .parent()
+      .parents("section")
       .fadeOut(setShowQ2Action);
   });
 
@@ -177,7 +177,7 @@ $(function() {
     player.seekTo(TIMESTAMP.q2_feedback);
     player.playVideo();
     $(this)
-      .parent()
+      .parents("section")
       .fadeOut();
   });
 });

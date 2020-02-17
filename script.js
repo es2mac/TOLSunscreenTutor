@@ -120,17 +120,9 @@ $(function() {
     };
   }
 
-  // Question 1 after correct choice: choose to watch
-  $("#q1-correct-watch").click(function() {
-    player.seekTo(TIMESTAMP.q1_incorrect);
-    player.playVideo();
-    $(this)
-      .parent()
-      .fadeOut(setShowQ2Action);
-  });
-
-  // Question 1 after incorrect choice, exactly the same as Q1 correct choose to watch
-  $("#q1-incorrect-continue").click(function() {
+  // Question 1 after incorrect choice, OR
+  // after correct choice but choose to watch
+  $("#q1-incorrect-continue, #q1-correct-watch").click(function() {
     player.seekTo(TIMESTAMP.q1_incorrect);
     player.playVideo();
     $(this)

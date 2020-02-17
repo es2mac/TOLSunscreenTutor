@@ -33,6 +33,13 @@ main section {
 
 .section-container {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section-container p {
+  max-width: 480px;
 }
 
 .section-container img {

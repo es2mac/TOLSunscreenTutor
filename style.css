@@ -64,6 +64,10 @@ main section {
   height: 120px;
 }
 
+#q1-correct-feedback-section button {
+  margin: 8px 8px 8px 8px;
+}
+
 #q2-section button {
   position: absolute;
   width: 180px;

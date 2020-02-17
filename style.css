@@ -1,5 +1,6 @@
 h1 {
   text-align: center;
+  margin-bottom: 40px;
 }
 
 main {
@@ -18,18 +19,55 @@ main section {
   justify-content: center;
   align-items: center;
   background-color: aquamarine;
+  /* background-color: white; */
   z-index: 1;
 }
 
 #welcome-scene {
   flex-direction: column;
-  /* zind */
 }
 
 #main-video {
   z-index: 0;
 }
 
-#q1-section button {
-  margin: 8px;
+#q2-section div {
+  position: relative;
+}
+
+#q2-section img {
+  width: 720px;
+}
+
+#q2-section button {
+  position: absolute;
+  width: 180px;
+  height: 76px;
+  border: 0;
+  border: 2px solid rgba(238, 130, 238, 0.514);
+  background-color: transparent;
+}
+
+#q2-section button:hover {
+  background-color: rgba(238, 130, 238, 0.214);
+}
+
+#q2-smooth {
+  top: 35px;
+  left: 310px;
+}
+
+#q2-reflection {
+  top: 120px;
+  left: 320px;
+}
+
+#q2-absorb {
+  top: 205px;
+  left: 330px;
+}
+
+#q2-hydrating {
+  top: 295px;
+  left: 330px;
 }

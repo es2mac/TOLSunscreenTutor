@@ -142,7 +142,7 @@ $(function() {
 
   // Question 2 choose "Smooth"
   $("#q2-smooth").click(function() {
-    let thisScene = $(this).parent();
+    let thisScene = $(this).parents("section");
     $("#q2-smooth-section").fadeIn(function() {
       thisScene.hide();
     });
@@ -150,7 +150,7 @@ $(function() {
 
   // Question 2 choose "Reflection"
   $("#q2-reflection").click(function() {
-    let thisScene = $(this).parent();
+    let thisScene = $(this).parents("section");
     $("#q2-reflection-section").fadeIn(function() {
       thisScene.hide();
     });
@@ -158,7 +158,7 @@ $(function() {
 
   // Question 2 choose "Absorb"
   $("#q2-absorb").click(function() {
-    let thisScene = $(this).parent();
+    let thisScene = $(this).parents("section");
     $("#q2-absorb-section").fadeIn(function() {
       thisScene.hide();
     });
@@ -166,7 +166,7 @@ $(function() {
 
   // Question 2 choose "Hydrating"
   $("#q2-hydrating").click(function() {
-    let thisScene = $(this).parent();
+    let thisScene = $(this).parents("section");
     $("#q2-hydrating-section").fadeIn(function() {
       thisScene.hide();
     });
